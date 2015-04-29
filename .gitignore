@@ -7,6 +7,11 @@
 *.out
 *.toc
 
+## annoying macOs stuff
+
+*.DS_Store
+*/*.DS_Store
+
 ## Intermediate documents:
 *.dvi
 *-converted-to.*
