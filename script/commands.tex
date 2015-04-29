@@ -1,0 +1,47 @@
+% Page setup
+\textwidth 16cm
+\textheight 22cm
+\topmargin 0.0cm
+\evensidemargin 0cm
+\oddsidemargin 0cm
+\parskip0.5explus0.1exminus0.1ex
+
+% Formatting commands
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+% Math commands
+
+% Prints x in bold face for vector notation
+\newcommand{\xx}{{\mathbf{x}}}
+
+% Prints a greek symbol in bold face for vector notation
+\newcommand{\greekvec}[1]{\mathbf{\boldsymbol #1}}
+
+% Transpose symbol
+\newcommand{\TT}{^\intercal}
+
+% Symbol for statistical independence
+\DeclareMathOperator{\Perp}{\perp \! \! \! \perp}
+
+% Symbol for the expectation
+\DeclareMathOperator*{\E}{\mathrm{E}}
+
+% Expectation. params: 1 - distribution, 2 - random variable
+\newcommand{\Ex}[2]{\E_{#1}[#2]}
+\newcommand{\Exest}[2]{\hat{\E}_{#1}[#2]}
+
+% Math bold face, shortened
+\newcommand{\mb}[1]{\mathbf{#1}}
+
+% Identity matrix
+\DeclareMathOperator{\ivec}{\mathbf{1}}
+% Vector of ones
+\DeclareMathOperator{\imat}{\mathbf{I}}
+
+% Equation of the multivariate normal pdf evaluated on a data point x_n
+\newcommand{\normpdfd}{\frac{1}{\sqrt{2\pi^M |\mb{C}|}} \exp \left( -\frac{1}{2} \mb{x_n \TT C^{-1} x_n} \right)}
+% Equation of the multivariate normal pdf (general form)
+\newcommand{\normpdf}{\frac{1}{\sqrt{2\pi^M |\mb{C}|}} \exp \left( -\frac{1}{2} \mb{x \TT C^{-1} x} \right)}
+
+% Command for reference to a figure
+\newcommand{\figref}[1]{\figurename~\ref{#1}}

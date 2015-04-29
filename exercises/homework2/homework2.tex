@@ -1,0 +1,61 @@
+\documentclass{exam}
+
+\usepackage{amsmath}
+
+\usepackage{amssymb}
+
+\usepackage{graphicx}
+
+
+\usepackage{hyperref}
+
+\pagestyle{headandfoot}
+\runningheadrule
+\firstpageheader{Machine Learning I}{Homework 2}{October XY, 2012}
+
+\title{Homework 2: Probability theory}
+\date{}
+\begin{document}
+\maketitle
+\thispagestyle{headandfoot}
+\vspace{-1cm}
+\begin{center}
+  {\fbox{\parbox{6in}{\centering
+Solutions to this exercise sheet are to be handed in
+ before the lecture on Friday, XY.XY.12. Code (.m-file) and output (.mat-file, figures as .pdf-files) for the  matlab-questions should be either submitted by email to \texttt{XY@student.uni-tuebingen.de} (subject: [ML1] Exercise 3) or uploaded to Ilias. Use comments to explain your code. Please adhere to the file naming convention: \texttt{Homework3\_<YourName>.<ext>}.}}}
+\end{center}
+\vspace{.5cm}
+
+This exercise sheet will concentrate on basic properties of random variables.
+
+
+\begin{questions}
+\question[20]{Basic properties of means and covariances} Assume that $X$ and $Y$ are continuous random variables with joint pdf $p_{X,Y}(x,y)$ and marginals $p_X(x)$ or $p_Y(y)$, and that $\alpha$ and $\beta$ are real numbers.
+ \begin{parts}
+ \part Show that $W=\alpha X+\beta$ has mean $E(W)=\alpha E(X)+\beta$ and variance $\mbox{Var}(W)= \alpha^2 \mbox{Var}(X)$.
+ \part Show that $Z=X+Y$ has mean $E(Z)=E(X)+E(Y)$ and Variance $\mbox{Var}(Z)=\mbox{Var}(X)+\mbox{Var}(Y)+2 \mbox{Cov}(X,Y)$
+ \part Show that, if $X$ and $Y$ are independent, $\mbox{Cov}(X,Y)=0$.
+ \part Calculate the covariance $\mbox{Cov}(\alpha X,\beta Y)$ and the correlation-coefficient $\mbox{Corr}(\alpha X, \beta Y)$, where $\mbox{Corr}(A,B)=\frac{\mbox{Cov}(A,B)}{\sqrt{\mbox{Var}(A)\mbox{Var}(B)}}$. Why is the correlation-coefficient the preferred measure of the association between two random variables? 
+ \part ~[optional] Show that $E(E(X|Y))=E(X)$ and $\mbox{Var}{X}=E(\mbox{Var}(X|Y))+\mbox{Var}(E(X|Y))$. (Note: these identities can be very useful for calculating means and variances in 'nested' models.)  
+ \end{parts}
+\question[10]{\bf Conditional probabilities}
+\begin{parts}
+\part ~['Monty Hall' Problem] You are a candidate in a TV show, and you are told that there is a cash-prize behind one of three doors (with equal probabilities for each). After you point to door $A$, the show-master opens door $B$, revealing that there is no prize in it. She gives you the option of switching your pick to door $C$, or staying with your original choice. What should you do to maximize your chances of getting the prize? 
+\part ~[matlab] Assume that a medical test has a specificity (i.e. P(test negative $|$ no disease)) and sensitivity (i.e. P(test positive $|$ disease)) of $99.9\%$. Calculate and plot the positive and negative predictive value (i.e. P(disease $|$ positive) and P(no disease $|$ negative))  of the test as a function of the prevalence of the disease (P(disease)). If the prevalence is $0.1\%$ and the test is positive, what is the probability that a patient has the disease?
+\end{parts}
+\question[20]{\bf The exponential distribution}
+\begin{parts}
+\part Calculate the mean, median and mode of an exponential distribution $X$ with parameter $\lambda=1/\mu$, $p_X(x)=\lambda \exp(-x\lambda)$. Explain why the mean is larger than the median.
+\part Calculate the conditional probability density $p(x| X>x_o)=\frac{p_X(x)}{P(X>x_o)}$ for $x>x_o$, and show that $p(x+x_o| X>x_o)= p_X(x)$. [This is called the 'memoryless' property of the exponential distribution-- knowing that the event has not occured till $x_o$ does not increase or decrease the probability density of events in the future.]
+\part Suppose that $Y$ is an exponential random variable with parameter $\gamma$, and that $X$ and $Y$ are independent. Calculate $P(X<Y)$.
+\part ~[matlab] Numerically calculate the joint distribution of $X$ and $Z=X+Y$ (for $\lambda=5$, $\gamma=2$) and plot it as an image, and numerically calculate and plot the marginal distribution of $Z$.
+%\part ~[matlab] For $\lambda=1$, Generate $N$ samples $x_1, x_2, \ldots x_N$ from an exponential distribution, and calculate the empirical variance $S_N= \frac{1}{N}\sum_{n=1}^N \left(x_n- \frac{1}{N}\sum_{n=1}^N x_n\right)^2$. Repeat this procedure $50$ times for each of $N=5,10, 15, 20, \cdots, 100$ and plot the average of $S_N$ as a function of $N$. Observe that $S_N$ under-estimates the expected variance (which is $1$), and that the error drops of with $1/N$.
+
+ \end{parts}
+
+\end{questions}
+
+
+
+
+\end{document}

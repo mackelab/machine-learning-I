@@ -1,0 +1,262 @@
+
+
+
+\documentclass[10pt, handout]{beamer}
+\setbeamertemplate{navigation symbols}{}
+\usefonttheme{serif} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{color} 
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\newcommand{\xx}{{\bf{x}}}
+
+\begin{document}
+\title{Machine Learning I Lecture II:\\ Tutorial on probability theory}   
+\author{Jakob H Macke\\ Max Planck Institute for Biological Cybernetics\\ Bernstein Center for Computational Neuroscience} 
+%\date{\today} 
+
+\frame{\titlepage} 
+
+%\frame{\frametitle{Today: Back to basics of probability theory}} 
+
+
+\frame{\frametitle{Plan for today}\tableofcontents} 
+
+
+\section{Discrete probability distributions} 
+
+\frame[shrink=10]{\frametitle{To specify a discrete random variable, we need a sample space and a probability mass function.}
+
+\begin{itemize}
+\item \alert{Sample space $\Omega$}: Possible 'states' $x$ of the random variable $X$ \\(outcomes of the experiment, output of the system, measurement). Examples: [on board]
+\item \pause Discrete random variables either have a finite or countable number of states.
+\item \pause \alert{Events:} Possible combinations of states ('subsets of $\Omega$')
+\item \pause \alert{Probability mass function $P(X=x)$}: A function which tells us how likely each possible outcome is.
+%\item %Rules: 
+\begin{align}
+P(X=x)&=P_X(x)=P(x)\\
+P(x)&\geq 0 \mbox{ for each } x\\
+\sum_{x \in \Omega} P(x)&=1\\
+P(A) = P(x \in A) &=\sum_{x \in A} P(X=x)\\
+\end{align}
+\item We write: $X|q \sim \mbox{Binomial}(q)$
+\item Bernoulli, Binomial, Multinonomial, Poisson:  [on board]
+\end{itemize}
+
+} 
+\frame{\frametitle{Conditional probability: Updating probabilities after we obtain information.}
+\begin{itemize}
+\item \alert{Conditional probability:} 'Recalculated probability of event A after someone tells you that event A happened.' 
+\begin{align}
+P(A|B)&= \frac{P(A \cap B)}{P(B)}\\
+\pause P(A \cap B)&= P(A|B) P(B)
+\end{align}
+\item \pause Examples: Rolls of a die
+ [on board]
+\item \pause Bayes Rule: 
+\begin{align}
+P(B|A) = \frac{P(A|B) P(B)}{P(A)}
+\end{align}
+\end{itemize}
+
+}
+
+\frame{\frametitle{Expectation and  variance characterize the mean value of a random variable and its dispersion.}
+\begin{itemize}
+\item Expectation (or mean): $E(X)= \sum_{x} P(X=x) x$ 
+\item \pause Expectation of a function:  $E(f(X))= \sum_{x} P(X=x) f(x)$ 
+\item \pause Moments= expectation of power of $X$: $M_k= E(X^k)$
+\item \pause Variance: Average (squared) fluctuation from the mean
+\begin{align}
+ \mbox{Var}(X)&= E((X-E(X))^2)\\
+ &= E(X^2)- E(X)^2\\
+ &= M_2-M_1^2
+\end{align}
+\item \pause Standard devation: Square root of variance.
+\item Illustration and examples: [on board]
+\pause Aside: Difference between expectation/variance of random variable and empirical average/variance.
+\end{itemize}
+
+}
+
+
+\section{Multivariate distributions: Joints, conditionals and marginals} 
+\frame{\frametitle{Bivariate distributions characterize systems with two observables.}
+\begin{itemize} 
+\item Example [on board]     
+\item \alert{Joint distribution:} $P(X=x, Y=y)$, a list of all probabilities of all possible pairs of observations
+\item \pause \alert{Marginal distribution:} $P(X=x)=\sum_y P(X=x, Y=y) $
+\item \pause \alert{Conditional distribution:} $P(X=x|Y=y) = \frac{P(X=x, Y=y)}{P(y=y)}$
+\item \pause $X |Y$ has distribution $P(X|Y)$, where $PX(|Y)$ specifies a 'lookup-table' of all possible $P(X=x| Y=y)$
+\end{itemize}
+\pause
+\bf Conditioning and marginalization come up in Bayesian inference ALL the time: 'Condition on what you observe. Marginalize out the uncertainty'.
+
+
+}
+
+\frame{\frametitle{The importance of conditional probabilities: Interpreting medical tests}
+%P(X=aids)=.001
+%P(test positive|aids)=1
+%P(test positive|heality)=.001
+%P(aids|positive test)= 0.091
+%Sensitivity: P(test positiv |disease)
+%Specificity: P(test neagative | no disease)
+%100 000 People
+
+\begin{tabular}{l|ll|l}
+~ & Positive Test & Negative Test & ~\\
+\hline
+HIV & 475 & 25 & 500\\
+no HIV & 4975 & 94525 &  99500\\
+\hline
+~ & 5450 &  94550 & 100000
+\end{tabular}
+
+\vspace{1cm}
+[on board]
+\vspace{3cm}
+
+\tiny Source: Statistical Methods for the Social Sciences, Agresti and Finaly, Prentice Hall-- not actual data
+}
+
+ \frame{\frametitle{Expectation and covariance of multivariate distributions:}
+ \begin{itemize}
+\item Conditional distributions are just distributions which have a (conditional) mean or variance. 
+\item \pause Note: $E(X|Y)= f(Y)$. 'If I tell you what $Y$ is, what is the average value of $X$?.
+%\item $E(X,Y)= \sum_{x,y} P(X=x, Y=y) (x,y)= (E(X), E(Y))$ 
+\item \pause Covariance is the expected value of the product of fluctuations: 
+\begin{align}
+ \mbox{Cov}(X,Y)&= E\left((X-E(X) )(Y-E(Y) )\right)\\
+ &= E(XY)- E(X)E(Y)\\
+ \mbox{Var(X)}&= \mbox{Cov}(X,X)
+\end{align}
+ \end{itemize}
+\pause Aside: One common way to construct bivariate random variables is to have a random variable whos parameter is another random variable. 
+ }
+
+
+
+ \frame{\frametitle{Independence of random variables}
+ \begin{itemize}
+ \item Intuitively, two \alert{events are independent} if knowing that the first took places tells us nothing about the probability of the second:  $P(A|B)= P(A)$
+ \item  \pause $P(A) P(B)= P(A \cap B)$
+ \item \pause Two \alert{random variables} are independent if the joint p.m.f. is the product of the marginals: $P(X=x,Y=y)=P(X=x) P(Y=y)$. 
+ \item If $X$ and $Y$ are independent, we write $X \perp Y$. Knowing the value of $X$ does not tell us anything about $Y$.
+ \item \pause If $X$ and $Y$ are independent, $\mbox{Cov}(X,Y)=0$.
+ \end{itemize}
+\pause Aside: Mutual information is a measure of how 'non-independent' two random variables are.
+ }
+
+
+
+\frame{\frametitle{Multivariate distributions are the same as bivariate distributions, just with more dimensions.}
+\begin{itemize} 
+\item $\mathbf{X},\xx$ are vector valued.
+\item Mean: $E(\mathbf{X})= \sum_{\xx} \xx P(\xx)$
+\item Covariance matrix: \begin{align}
+\mbox{Cov}(X_i, X_j)&= E(X_iX_j)-E(X_i) E(X_j)\\
+\mbox{Cov}(\mathbf{X})&= E(\mathbf{X}\mathbf{X}^\top)-E(\mathbf{X}) 
+E(\mathbf{X})^\top 
+ \end{align}
+\item \pause Conditional and marginal distributions: Can define and calculate any (multi or single-dimensional) marginals or conditional distributions we need:  $P(X_1)$, $P(X_1, X_2)$, $P(X_1, X_2, X_3 |X_4)$, etc..
+\end{itemize}
+
+}
+\section{} 
+ 
+ 
+
+
+
+
+\section{Continuous probability distributions}
+
+\frame{\frametitle{Continous random variables}
+\begin{itemize}
+\item A random variable $X$ is \alert{continuous} if its sample space $X$ is uncountable. 
+\item In this case, $P(X=x)=0$ for each $x$.
+\item \pause If $p_X(x)$ is a \alert{probability density function} for $X$, then 
+\begin{align}
+P(a < X <b) &=\int_a^b p(x) dx\\
+P(a<X <a+dx) \approx p(a) \cdot dx
+\end{align}
+\item \pause The \alert{cumulative distribution function} is $F_X(x)=P(X<x)$. We have that $p_X(x)=F'(x)$, and $F(x)=\int_{-\infty}^x p(s) ds$.
+\item  \pause 
+More generally: If $A$ is an event, then
+\begin{align}
+P(A)&=P(X \in A) =\int_{x \in A}  p(x) dx\\
+P(\Omega)&=P(X \in \Omega) =\int_{x \in \Omega} p(x) dx=1
+\end{align}
+\item Example: Uniform, Exponential, Beta  [on board]
+\end{itemize}
+}
+
+
+
+\frame{\frametitle{People will often say probability when they mean probability density.}
+\begin{itemize}
+\item Probability density functions do not satisfy the definitions of probability (e.g. they can bigger than $1$). However, people (including your lecturer) will often be sloppy and write things like $P(X=x)$ and say 'the probability of $X$' when they really mean 'the probability density of $X$ evaluated at $x$'.
+\item \pause Similarly, people (including your lecturer) will often be sloppy and write integrals or say 'we need to integrate our $X$' when they write down general formulas-- if these formulas are applied to discrete random variables, the integrals would need to be replaced by sums.
+\item \pause This might be bad practice, but it is usually clear from the context whether a random variable is discrete or continuous. In addition, it is good preparation for reading papers---many machine learning papers are very sloppy about usage of these terms.
+\end{itemize}
+}
+
+
+
+\frame{\frametitle{Mean, variance, and conditioning on events are the same as the discrete case, just with sums replaced by integrals.}
+\begin{itemize}
+\item Mean: $E(X)= \int_x x  \cdot p(x) dx$\\
+\item Variance: $\mbox{Var}(X)= E(X^2)- E(X)^2$
+\item Example: Uniform, Exponential [on board]
+\item \pause If $X$ has pdf $p(x)$, then $X | (X \in A)$ has pdf 
+\begin{align}
+p_{X|A}(x)=\frac{p(x)}{P(A)}=\frac{p(x)}{\int_{x \in A} p(x) dx}
+\end{align}
+\item \pause Only makes sense if $P(A)>0$~!
+\item Example: Uniform, Exponential [on board]
+\end{itemize}
+}
+
+
+%\frame{\frametitle{The univariate Gaussian}
+
+%[on board]
+
+%}
+
+\frame{\frametitle{Bivariate continuous distributions: Marginalization, Conditioning and Independence}
+\begin{itemize}
+\item $p_{X,Y}(x,y)$, joint probablity density function of $X$ and $Y$
+\item $\int_x \int_y p(x,y)dx dy=1$
+\item \pause \alert{Marginal distribution:} $p(x)= \int_{-\infty}^\infty p(x,y) dy$
+\item \pause \alert{Conditional distribution:} $p(x|y)= \frac{p(x,y)}{p(y)}$ 
+\item Note: $P(Y=y)=0$! Formally, conditional probability in the continuous case can be derived using infinitesimal events.
+\item \alert{Independence:} $X$ and $Y$ are independent if $p_{X,Y}(x,y)=p_X(x)p_Y(y)$
+\end{itemize}
+}
+
+%\section{The Gaussian distribution}
+ 
+
+%\frame{\frametitle{The multivariate Gaussian}
+
+%[on board]
+
+%}
+ 
+
+%\frame{\frametitle{The magic formula: Conditional distributions in the multivariate Gaussian}
+
+%[on board]
+
+%}
+ 
+\end{document}
+
+
+
