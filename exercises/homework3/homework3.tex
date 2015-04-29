@@ -1,0 +1,72 @@
+\documentclass{exam}
+
+\usepackage{amsmath}
+
+\usepackage{amssymb}
+
+\usepackage{graphicx}
+
+
+\usepackage{hyperref}
+
+\pagestyle{headandfoot}
+\runningheadrule
+\firstpageheader{Machine Learning I}{Homework 3}{October 31, 2012}
+
+\title{Homework 3: Gaussian random variables}
+\date{}
+\begin{document}
+\maketitle
+\thispagestyle{headandfoot}
+\vspace{-1cm}
+\begin{center}
+  {\fbox{\parbox{6in}{\centering
+Solutions to this exercise sheet are to be handed in
+ before the lecture on Friday, XY.XY.12. Code (.m-file) and output (.mat-file, figures as .pdf-files) for the  matlab-questions should be either submitted by email to \texttt{XY.XY@student.uni-tuebingen.de} (subject: [ML1] Exercise 3) or uploaded to Ilias. Use comments to explain your code. Please adhere to the file naming convention: \texttt{Homework3\_<YourName>.<ext>}.\\ %\bf This exercise sheet will be graded out of 30 points, i.e. you can achieve 'full marks' by getting 30 out of 45 possible points, and we will not award more than 30 points for a solution. However, please note that all the material on the sheet is exam-relevant, so make sure you understand any questions that you might have skipped.
+ }}}
+\end{center}
+
+%This exercise sheet will concentrate on Gaussian random variables
+
+\begin{questions}
+%
+
+%\question[20]{\bf Bivariate distributions [matlab]} Download the file \texttt{Homework4.mat}. The variable %\texttt{pxy} contains the probability mass function of a bivariate distribution (in fact, it is obtained by %looking at the joint histogram of two adjacent pixels in an image), where \texttt{pxy(i,j)} 
+%\begin{parts}
+%part x
+%\end{parts}
+
+
+
+\question[10] {\bf The Gaussian distribution}
+\begin{parts}
+\part Using the fact that $\sqrt{\frac{\beta}{2\pi}}\int_{-\infty}^{\infty}\exp\left(-\frac{\beta}{2}(s-\gamma)^2\right) ds=1$, show that $\int_{-\infty}^{\infty} \exp(-as^2+bs)ds=\sqrt{\pi/a} \exp(\frac{b^2}{4a})$.
+\part Suppose that $\mu \sim \mathcal{N}(0, 1/\alpha)$ and $ x| \mu \sim \mathcal{N}(\mu,1/\beta)$. By integrating out $\mu$, show that the marginal distribution of $x$ is given by $x \sim \mathcal{N}(0, 1/\beta+1/\alpha)$ [Hint: Write down the joint distribution $p(x,\mu)=p(x|\mu) p(\mu)$. To perform the integral over $\mu$, use the identity from part b)]
+\part ~[optional]
+In the lecture, we showed that a product of two Gaussian probability density functions is \emph{proportional} to a Gaussian density function, but we did not derive the proportionality-factor. Suppose that $p_1(x)=\mathcal{N}(x,\mu_1, 1/\beta_1)$ and $p_2(x)=\mathcal{N}(x,\mu_2, 1/\beta_2)$. Find $Z$ such that 
+\begin{align}
+p(x)=p_1(x) p_2(x) =\frac{1}{Z} \mathcal{N}(x, 1/\beta(\beta_1\mu_1+\beta_2\mu_2),1/\beta) \mbox{~where~} \beta=\beta_1+\beta_2.
+\end{align}
+[Hint: Go through the calculations we did in the lecture again, but carefully keep track of the factors we had dropped.]
+\end{parts}
+
+\question[20] {\bf Multisensory integration.} Consider an experiment in which an observer has both visual and auditory information about the location of a target $\mu$, and tries to combine both sources of information in order to increase her accuracy. Concretely, suppose that the observer has a  visual  $x_v | \mu \sim  \mathcal{N}(\mu, \sigma_v^2)$ and an auditory measurement $x_a | \mu \sim  \mathcal{N}(\mu, \sigma_a^2)$, where we assume the noise in the two modalities to be independent.
+\begin{parts}
+\part Calculate the posterior distribution of the location of the target, $p(\mu| x_v, x_a)$. 
+\part ~[matlab] Plot the posterior as well as the (visual and auditory) likelihood functions for $\mu_o=0$, $\sigma_o=100$, $x_v=-10$, $x_a=10$, $\sigma_v=5$, $\sigma_a=20$.  Explain why the posterior mean will always be closer to $x_v$ than to $x_a$. 
+\part Suppose that the observer is not using the posterior mean as an estimate of where the target is, but the simple heuristic $x_h=\frac{1}{2}(x_v+x_a)$, i.e. the mean of the two measurements. As the sum of two Gaussians is Gaussian again, $x_h$ has a Gaussian distribution. Calculate its mean and variance [Hint: the identities from the previous sheet might be useful].
+\part Plot the variance of $x_h$ as well as the posterior variance as a function of $\sigma_a$ (for $\sigma_v= 5$ and $\sigma_a \in [5, 50]$). Observe that the posterior variance is always smaller than $\mbox{min}(\sigma_v^2, \sigma_a^2)$, i.e. that there is a benefit from sensory integration even if the accuracy of the auditory signal is poor.  For which values of $\sigma_a$ is the estimate of $x_h$ actually worse (i.e. has higher variance) than just using the visual signal alone?
+ 
+
+
+\end{parts}
+
+
+
+
+\end{questions}
+
+
+
+
+\end{document}
