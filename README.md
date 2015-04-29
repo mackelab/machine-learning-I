@@ -10,6 +10,13 @@ Many of the figures in slides are taken from the [Book Pattern Recognition and M
 
 If you find any errors or want to make suggestions, please drop me an email or issue a pull request.
 
+# List of lectures and exercises
+
+[to be added at the end]
+
+Note: The material in lecture notes 2 and 3 (introduction to probability theory and Gaussian models) was originally added to the course after it had become apparent in the lecture on Bayesian inference that not all students had a sufficient background in probability theory for the course. The material in lecture 2 and 3 was originally taught AFTER the introduction to Bayesian inference-- for the repository, we sorted the slides in logical rather than chronological order, but this possibly has resulted in some statements in slides having become non-sensical or at least odd.
+
+
 # Original course description (of full course)
 
 ## Objective
