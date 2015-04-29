@@ -1,23 +1,25 @@
 # machine-learning-I
 
-Slides and lecture notes for the  course 'machine learning I' taught at the Graduate School Neural Information Processing in Tuebingen in the first half of the Winter-Semester 2012. The course is a one-semester, once weekly course for students studying for a Master's degree in Neural Information Processing at the University of Tuebingen.  The online respository only covers the first half-semester of the course, which was focused on supervised learning.  The second half of the course is focused on unsupervised learning, and was taught by Prof. Bethge.   Please see the website of the graduate school Tuebingen for full details.
+Slides and lecture notes for the  course 'machine learning I' taught at the Graduate School Neural Information Processing in Tuebingen in the first half of the Winter-Semester 2012. The course is a one-semester, once weekly course for students studying for a Master's degree in Neural Information Processing at the University of Tuebingen.  The online respository only includes slides and exercise for the the first half-semester of the course, which was focused on supervised learning.  The second half of the course is focused on unsupervised learning, and was taught by Prof. Bethge.   Please see the website of the graduate school Tuebingen for full details.
 
 The course assumes some previous knowledge of linear algebra and probability theory, but includes a refresher to probability theory at the beginning. Being a short introductory course, it includes only very basic probabilistic algorithms for classification and regression.
 
 Lecture notes were compiled by Patrick Putzky, patrick.putzky@googlemail.com.
 
-Many of the figures in slides are taken from the [Book Pattern Recognition and Machine Learning](http://research.microsoft.com/en-us/um/people/cmbishop/prml/index.htm), which Chris Bishop kindly provides on his [website](http://research.microsoft.com/en-us/um/people/cmbishop/prml/webfigs.htm). The book is also the primary recommended textbook for the course.
+Many of the figures in slides and in the lecture notes are taken from the [Book Pattern Recognition and Machine Learning](http://research.microsoft.com/en-us/um/people/cmbishop/prml/index.htm), which Chris Bishop kindly provides on his [website](http://research.microsoft.com/en-us/um/people/cmbishop/prml/webfigs.htm). The book is also the primary recommended textbook for the course.
 
-If you find any errors or want to make suggestions, please drop me an email or issue a pull request.
+
 
 # List of lectures and exercises
 
 [to be added at the end]
 
-Note: The material in lecture notes 2 and 3 (introduction to probability theory and Gaussian models) was originally added to the course after it had become apparent in the lecture on Bayesian inference that not all students had a sufficient background in probability theory for the course. The material in lecture 2 and 3 was originally taught AFTER the introduction to Bayesian inference-- for the repository, we sorted the slides in logical rather than chronological order, but this possibly has resulted in some statements in slides having become non-sensical or at least odd.
+Note: The material in lecture notes 2 and 3 (introduction to probability theory and Gaussian models) was originally added to the course after it had become apparent in the lecture on Bayesian inference that not all students had a sufficient background in probability theory for the course. The material in lecture 2 and 3 was originally taught AFTER the introduction to Bayesian inference-- for the repository, we sorted the slides in logical rather than chronological order, but this possibly has resulted in some statements in slides having become non-sensical or at least odd. In addition, the number of lectures is NOT consistent between the slides and the lecture notes.
 
+Course material is provided 'as is', and includes multiple typos, sloppy citations, errors, inaccuracies and omissions. 
+If you find any errors or want to make suggestions, please drop me an email or (better even) fixe them and issue a pull request for them to be included. Also make sure to add yourself to the list of contributors at the end of this document.
 
-# Original course description (of full course)
+# Original course description
 
 ## Objective
 
@@ -37,5 +39,11 @@ Students should have a basic knowledge of linear algebra and probability theory.
 Christopher M. Bishop (2007) Pattern Recognition And Machine Learning , Springer.
 Trevor Hastie, Robert Tibshirani, Jerome Friedman (2009) The Elements of Statistical Learning, Springer.
 
+# Contributors
+
+* Jakob Macke, MPI Biological Cybernetics www.mackelab.org (lecturer part 1)
+* Matthias Bethge, University of Tuebingen www.bethgelab.org (lecturer part 2)
+* Patrick Putzky, MPI Biological Cybernetics (compiled lecture notes)
+* Nicolas Ludolph, University of Tuebingen (TA on the course)
 
 
