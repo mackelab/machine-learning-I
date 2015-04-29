@@ -1,0 +1,64 @@
+\documentclass{exam}
+
+\usepackage{amsmath}
+
+\usepackage{amssymb}
+
+\usepackage{graphicx}
+
+
+\usepackage{hyperref}
+
+\pagestyle{headandfoot}
+\runningheadrule
+\firstpageheader{Machine Learning I}{Homework 5}{XY XY, 2012}
+
+\title{Homework 5: Linear Regression revisited}
+\date{}
+\begin{document}
+\maketitle
+\thispagestyle{headandfoot}
+\vspace{-1cm}
+\begin{center}
+  {\fbox{\parbox{6in}{\centering
+Solutions to this exercise sheet are to be handed in
+ before the lecture on Friday, XY.XY.12. Code (.m-file) and output (.mat-file, figures as .pdf-files) for the  matlab-questions should be either submitted by email to \texttt{XY.XY@student.uni-tuebingen.de} (subject: [ML1] Exercise 5) or uploaded to Ilias. Use comments to explain your code. Please adhere to the file naming convention: \texttt{Homework5\_<YourName>.<ext>}.}}}
+\end{center}
+\vspace{.5cm}
+
+This exercise sheet will concentrate on linear regression and Gaussian random variables
+
+
+\begin{questions}
+
+\question[10] {\bf Linear Regression (based on Bishop exercise 3.3)}. Consider a data-set in which each data point $t_n$ has a weighting $r_n>0$, so that the sum-of-square error function is
+\begin{align}
+E(\omega)= \sum_{n=1}^N r_n (t_n-\omega^\top x_n)^2.
+\end{align}
+\begin{parts}
+\part Find the parameter-vector $\hat\omega$ which minimizes this error function.
+\part Describe two interpretation of this error functions in terms of i) replicated measurements and ii) a data-dependent noise-variance. %For the second interpretation derive, for each data-point, its associated noise-variance $\sigma_n^2$ as a function of $r_n$ and $\sigma^2$ is the noise-variance in a Gaussian model $t_n \sim \mathcal{N}(\omega^\top x_n, \sigma^2)$. 
+\end{parts}
+%Nicolas: I would give 7 points for a) and 8 for b), but feel free to adjust it.
+
+
+%Nicolas: I would give 5 points for a) and for b) and 10 for c)but feel free to adjust it. I hope I got the identity right...
+
+
+\question[20] {\bf Regression with basis functions [matlab]} Download the file \texttt{Homework5.mat}, in which you will find training data \texttt{xTrain} (a vector of length $N=20$) with outputs \texttt{tTrain}.  Your job will be to train a nonlinear regression model from $x$ to $t$ using basis functions. 
+\begin{parts}
+\part We want to use a 50-dimensional basis-set, i.e. the `feature-vector' $z(x)$ should be 50-dimensional with $z_i(x)=2\exp(-(x-i)^2/\sigma^2)$ with $\sigma=5$ and $i=1, \ldots 50$. Make a plot of the 50 basis functions (use the x-values in \texttt{xPlot}).
+Calculate the $50 \times N$ matrix \texttt{zTrain} for which the $n$-th row is $z(x_n)$, and produce an image of the matrix (using \texttt{imagesc}).
+\part Using $\alpha=\beta=1$ (same notation as in lectures), calculate the posterior mean $\mu=E(\omega|D)$ (a $50 \times 1$ vector) and plot it.
+\part The posterior mean $\mu$ is a vector of weights of the basis functions. Calculate the corresponding predictive mean by $f_\mu(x)=E(t(x)|D)=\sum_{i=1}^{50} \mu_{i} z_i(x)$ and plot the predictive mean and the observed training data into the same plot.
+\part Calculate the posterior covariance over weights $\Sigma=\mbox{Cov}(\omega|D)$ and display it as an image. Extract the diagonal of $\Sigma$ go obtain the posterior variance, and use it to plot $\pm$ 2 standard deviation error bars on the mean in part  b) 
+\part ~[optional but recommended] Calculate, for each $x$ (use the values in \texttt{xPlot}), the predictive variance $\mbox{Var}(t |D,x) $, and use it to plot 'error bars' for the predictive distribution, i.e. $f_\mu(x)\pm 2\sqrt{\mbox{Var}(t |D,x) }$.
+\end{parts}
+
+
+\end{questions}
+
+
+
+
+\end{document}
