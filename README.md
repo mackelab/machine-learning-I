@@ -6,6 +6,8 @@ The course assumes some previous knowledge of linear algebra and probability the
 
 Lecture notes were compiled by Patrick Putzky, patrick.putzky@googlemail.com.
 
+Many of the figures in slides are taken from the [Book Pattern Recognition and Machine Learning](http://research.microsoft.com/en-us/um/people/cmbishop/prml/index.htm), which Chris Bishop kindly provides on his [website](http://research.microsoft.com/en-us/um/people/cmbishop/prml/webfigs.htm). The book is also the primary recommended textbook for the course.
+
 If you find any errors or want to make suggestions, please drop me an email or issue a pull request.
 
 # Original course description (of full course)
