@@ -1,0 +1,307 @@
+\section[Basics in probability theory]{Lecture 3: Basics in probability theory}
+
+\subsection{Discrete random variables}
+
+Here we will shortly define random variables which is the basis of understanding probability. We will first focus on discrete random variables since we have an intuitive understanding of probability from everyday life situations, e.g. when we toss a coin or role a die. 
+A random variable is a variable which is subject to random effects, i.e. other than having a fixed value it can take on different values each associated with a probability. In order to specify a random variable we define a probability space $(\Omega, E, P)$. $\Omega$ is called the sampling space i.e. the set of all possible outcomes (states) of a random process. In the case of a single coin toss we can define $\Omega = \lbrace H , T\rbrace$ as the set which respresents Heads and Tails of the toss. $E$ is the set of all possible events where each event is a subsest of $\Omega$, we write $ E_i \subseteq \Omega $. Based on the possible events we define a function $P$ which maps possible events to a probability measure $P: E \rightarrow [0,1]$. This probability measure represents the likelihood of an event happening in an experiment. We say that for the conjunction of all disjoint subsets of E our probability is normalized, i.e. it sums to one: $(\forall E_i \cap E_j = \emptyset): P(\cup_i E_i) = 1$. This is equivalent to saying that $P(\Omega) = 1$. For some examples on how to utilize the probability space see the example box below. \\
+
+\begin{bbbox}{Discrete random variables}
+	\begin{small}
+	\begin{tabularx}{\textwidth}{|l|l|l|X|X|} %{| l | l | l | p{5cm} | p{5cm} |}
+	\hline
+	Example & Distribution & $\Omega$ & $E$ & $P(X=x)$ \\ \hline
+	Coin Flip & Bernoulli & $\lbrace H, T \rbrace$ & $\lbrace \rbrace$ , $\lbrace H \rbrace$ , $\lbrace T \rbrace$ , $\lbrace H,T \rbrace$ & $P(X = H) = P(X = T) = 0.5$ \\ \hline
+	Die Roll & Categorical & $\lbrace 1,2,3,4,5,6 \rbrace $ & $\lbrace \mbox{"even number"} \rbrace$ , $\lbrace 5,6 \rbrace $ & $P(X = x) = \frac{1}{6}$ ; $P(X = \{5,6\}) = P(X = 5) + P(X = 6))$ \\ \hline
+	Spike count & Poisson & $ \lbrace 1,2,... \rbrace $ & $\lbrace 0 \rbrace$ , $\lbrace \mbox{"at least one"} \rbrace $ & $P(X = 0) = \mbox{e}^{-\lambda}$; $P(X > 0) = 1-\mbox{e}^{-\lambda}$ \\ \hline
+	
+	\end{tabularx}
+	\end{small}
+\end{bbbox}
+
+In the case of a discrete random variable $P$ is called a probability mass function (pmf). Since discrete random variables have a countable or finite number of states, or $X: \Omega \rightarrow \mathbb{N}$, the pmf directly assigns a probability to each possible event. We will later see that this is not the case for the $P$ of continuous random variables. In literature there is a redundancy in the notation of the pmf and it is useful to know that some of the expressions used are equivalent:
+
+\begin{itemize}
+\item %Rules: 
+\begin{align}
+P(X=x)&=P_X(x)=P(x)\\
+P(x)&\geq 0 \mbox{ for each } x\\
+\sum_{x \in \Omega} P(x)&=1\\
+P(A) = P(x \in A) &=\sum_{x \in A} P(X=x)\\
+\end{align}
+\item We write: $X|q \sim \mbox{Binomial}(q)$
+\end{itemize}
+
+\subsection{Moments and Expectations}
+\begin{itemize}
+\item Expectation (or mean): $E(X)= \sum_{x} P(X=x) x$ 
+\end{itemize}
+
+\begin{bbbox}{Expectation of a discrete random variable}
+	The expectation of a discrete random variable is the weighted sum over all possible states of the random variable, where the weights are the probabilities of the respective state.\\
+	
+	Examples: fair coin; fair die; \\
+	\begin{flalign*}
+		&\text{Fair coin: } & E(coin) & = P(coin=1)\times1 + P(coin=0)\times0 = \frac{1}{2} \\
+		&\text{Fair die: } & E(die) & = 1\times\frac{1}{6} + 2\times\frac{1}{6} + \dots + 6\times\frac{1}{6} = 3.5 \\
+ 		&\text{Poisson with rate } \lambda \text{: } & E(X) & = \sum_{x = 1}^{\infty} (x) \frac{1}{\underbrace{x!}_{(1 \times 2 \times \dots \times x)}} \mbox{e}^{-\lambda} \lambda^x \\
+		& & & = \sum_{x = 1}^{\infty} \frac{1}{(x-1)!} \mbox{e}^{-\lambda} \lambda^{x-1} \lambda \\
+		& & & = \lambda \sum_{x = 1}^{\infty} \frac{1}{(x-1)!} \mbox{e}^{-\lambda} \lambda^{x-1} \\
+		& & & = \lambda \underbrace{\sum_{y = 0}^{\infty} \frac{1}{(y)!} \mbox{e}^{-\lambda} \lambda^{y}}_{ = 1} \;\; \vert (y = x+1) \\
+		& & & = \lambda
+	\end{flalign*}
+	
+\end{bbbox}
+
+\begin{itemize}
+\item Expectation of a function:  $E(f(X))= \sum_{x} P(X=x) f(x)$ 
+\item Moments= expectation of power of $X$: $M_k= E(X^k)$
+\end{itemize}
+
+\begin{bbbox}{Example: 2nd order moment}
+	We want to calculate the expectation of $Die^2$ for a fair die: \\
+	\begin{align*}
+		E(Die^2) &= \sum_{x = 1}^6 P(Die = x) x^2 \\
+				 &= \frac{1}{6} (1 + 2 + 9 + 16 + 25 + 36) \\
+				 &= \frac{1}{6} 89 \\
+				 &\approx 14.66			 
+	\end{align*}
+\end{bbbox}
+
+\begin{itemize}
+\item Variance: Average (squared) fluctuation from the mean
+\begin{align}
+ \mbox{Var}(X)&= E((X-E(X))^2)\\
+ &= E(X^2)- E(X)^2\\
+ &= M_2-M_1^2
+\end{align}
+\end{itemize}
+
+\begin{bbbox}{Variance}
+The alternative definition of variance based on moments directly emerges from the linearity of the expectation:
+	\begin{align*}
+		Var(X) = E((X - E(X))^2) &= E(X^2 - 2 \times X \times E(X) + E(X)^2) \\
+						&= E(X^2) - 2 \times E(X \times E(X)) + E(X)^2 \\
+						&= E(X^2) - 2 \times E(X) \times E(X) + E(X)^2 \\
+						&= E(X^2) - E(X)^2
+	\end{align*}
+\end{bbbox}
+
+\begin{bbbox}{Why do we use the squared fluctuations from the mean for the mesaure of variance?}
+	
+	\begin{itemize}
+		\item Average deviations from the mean: \\
+			  $Var(X) = E(X-E(X)) = E(X) - E(X) = 0$ \\
+			  As we see this measure is always zero and therefore useless for our purpose.
+		\item Average abolute deviations from the mean: 
+			  \\$Var(X) = E(|X-E(X)|)$ \\
+			  However this measure can sometimes be technically difficult and is less used in practice.
+	\end{itemize}
+
+\end{bbbox}
+
+\begin{itemize}
+\item Standard devation: Square root of variance.
+\item Illustration and examples: [on board]
+Aside: Difference between expectation/variance of random variable and empirical average/variance.
+
+\end{itemize}
+
+\subsection{Probability rules}
+The course will be focused on Bayesian statistics and in that context we will be constantly using Bayes' rule. In this section we will show that Bayes' rule strictly follows from the definition of conditional probabilities. We have seen that we can measure the probability of an event $A$ with $P(A)$. Further we can measure the probability of two events $A$ and $B$ with P(A,B). We call this the joint probability of the events $A$ and $B$
+
+\begin{align}
+	P(B|A) = \frac{P(A|B) P(B)}{P(A)}
+\end{align}
+
+where $P(B|A)$ is the posterior probability of an event $B$ given we have knowledge about an event $A$. It is straightforward to show from the definition of conditional probabilities that Bayes' rule holds. We define the conditional probability of an event $B$ given knowledge about and event $A$ as
+
+\begin{align}
+	P(B|A) = \frac{P(A,B)}{P(A)}
+\end{align}
+
+where $P(A,B)$ is the  probability of observing events $A$ and $B$, we call this the joint probability of $A$ and $B$. And $P(A)$ is the probability of observing and event $A$. We can  
+
+\begin{exbox}{It is cold today, will we have rain?}
+We will consider the example of interactions between rain and temperature in T\"ubingen. Lets say we have made $N = 30$ independent measurements of the weather conditions in T\"ubingen. We arbitrarily chose to divide our observations based on the temperature and whether it was raining or not. The table below reflects the number of times we made observations under a given condition, e.g. the number of observations when the temperature was below  $10\,^{\circ}\mathrm{C}$ and it was not raining was $N_{(T=0,R=0)} = 10$. \\
+	\begin{tabular}{ll|c|c|r}
+			& & Rain & No Rain \\
+			& & $R = 1$ & $R = 0$ & $\sum_R$ \\ \hline
+		Temp $> 20\,^{\circ}\mathrm{C}$: & $T = 2$ & $1$ & $3$ & 4\\ \hline
+		$10\,^{\circ}\mathrm{C} <$ Temp $< 20\,^{\circ}\mathrm{C}$: & $T = 1$ & $4$ & $8$ & 12\\ \hline
+		Temp $< 10\,^{\circ}\mathrm{C}$: & $T = 0$ & $4$ & $10$ & 14\\ \hline
+			& $\sum_T$ & 9 & 21 \\
+	\end{tabular}
+We can easily see that the sum over all observations is $N = 30$ again. If we now want to calculate the probability of the temperature being below $10\,^{\circ}\mathrm{C}$ and there being no rain, we can simply do $P(T=0,R=0) = \frac{N_{(T=0,R=0)}}{N} = \frac{1}{3}$. We call this the \textbf{probability} of events $T=0$ and $R=0$. This can be done for all possible events.\\
+Lets say we know the temerature is between $10$ and $20\,^{\circ}\mathrm{C}$ and we want to know how likely it is to rain. We can utilize the \textbf{conditional probability} $P(R=1|T=1)$
+\end{exbox}
+
+\begin{defbox}{Probability rules}
+	\begin{itemize}
+	\item {Joint distribution:} $P(X=x, Y=y)$, a list of all probabilities of all possible pairs of observations
+	\item {Marginal distribution:} $P(X=x)=\sum_y P(X=x, Y=y) $
+	\item {Conditional distribution:} $P(X=x|Y=y) = \frac{P(X=x, Y=y)}{P(y=y)}$
+	\item $X |Y$ has distribution $P(X|Y)$, where $P(X|Y)$ specifies a 'lookup-table' of all possible $P(X=x| Y=y)$
+	\end{itemize}
+\end{defbox}
+
+\begin{itemize}
+\item {Conditional probability:} 'Recalculated probability of event A after someone tells you that event A happened.' 
+\begin{align}
+P(A|B)&= \frac{P(A \cap B)}{P(B)}\\
+P(A \cap B)&= P(A|B) P(B)
+\end{align}
+\item Examples: Rolls of a die
+ [on board]
+\item Bayes Rule: 
+\begin{align}
+P(B|A) = \frac{P(A|B) P(B)}{P(A)}
+\end{align}
+\end{itemize}
+
+\begin{itemize} 
+\item Example [on board]     
+\item {Joint distribution:} $P(X=x, Y=y)$, a list of all probabilities of all possible pairs of observations
+\item {Marginal distribution:} $P(X=x)=\sum_y P(X=x, Y=y) $
+\item {Conditional distribution:} $P(X=x|Y=y) = \frac{P(X=x, Y=y)}{P(y=y)}$
+\item $X |Y$ has distribution $P(X|Y)$, where $PX(|Y)$ specifies a 'lookup-table' of all possible $P(X=x| Y=y)$
+\end{itemize}
+Conditioning and marginalization come up in Bayesian inference ALL the time: 'Condition on what you observe. Marginalize out the uncertainty'.
+
+\subsection{Independence of random variables}
+
+\begin{itemize}
+ \item Intuitively, two {events are independent} if knowing that the first took places tells us nothing about the probability of the second:  $P(A|B)= P(A)$
+ \item  $P(A) P(B)= P(A \cap B)$
+ \item  Two {random variables} are independent if the joint p.m.f. is the product of the marginals: $P(X=x,Y=y)=P(X=x) P(Y=y)$. 
+ \item If $X$ and $Y$ are independent, we write $X \perp Y$. Knowing the value of $X$ does not tell us anything about $Y$.
+ \item  If $X$ and $Y$ are independent, $\mbox{Cov}(X,Y)=0$.
+ \end{itemize}
+ Aside: Mutual information is a measure of how 'non-independent' two random variables are.
+
+
+\subsection{Multivariate Distributions}
+\subsubsection{Expectation and covariance}
+\begin{itemize}
+\item Conditional distributions are just distributions which have a (conditional) mean or variance. 
+\item Note: $E(X|Y)= f(Y)$. 'If I tell you what $Y$ is, what is the average value of $X$?.
+%\item $E(X,Y)= \sum_{x,y} P(X=x, Y=y) (x,y)= (E(X), E(Y))$ 
+\item Covariance is the expected value of the product of fluctuations: 
+\begin{align}
+ \mbox{Cov}(X,Y)&= E\left((X-E(X) )(Y-E(Y) )\right)\\
+ &= E(XY)- E(X)E(Y)\\
+ \mbox{Var(X)}&= \mbox{Cov}(X,X)
+\end{align}
+ \end{itemize}
+Aside: One common way to construct bivariate random variables is to have a random variable whos parameter is another random variable. 
+
+\begin{itemize} 
+\item $\mathbf{X},\xx$ are vector valued.
+\item Mean: $E(\mathbf{X})= \sum_{\xx} \xx P(\xx)$
+\item Covariance matrix: 
+\begin{align}
+\mbox{Cov}(X_i, X_j)&= E(X_iX_j)-E(X_i) E(X_j)\\
+\mbox{Cov}(\mathbf{X})&= E(\mathbf{X}\mathbf{X}^\top)-E(\mathbf{X}) 
+E(\mathbf{X})^\top 
+ \end{align}
+\item Conditional and marginal distributions: Can define and calculate any (multi or single-dimensional) marginals or conditional distributions we need:  $P(X_1)$, $P(X_1, X_2)$, $P(X_1, X_2, X_3 |X_4)$, etc..
+\end{itemize}
+
+\begin{bbbox}{Covariance matrix}
+	\begin{align*}
+		& & Cov(\mathbf{X}) &= 
+		\begin{pmatrix}
+   		Cov(X_1,X_1) & Cov(X_2,X_1) & \cdots & Cov(X_n,X_1) \\
+   		Cov(X_1,X_2) & Cov(X_2,X_2) & \cdots & Cov(X_n,X_2) \\
+   		\vdots  & \vdots  & \ddots & \vdots  \\
+   		Cov(X_1,X_n) & Cov(X_2,X_n) & \cdots & Cov(X_n,X_n) \\
+  		\end{pmatrix} \\
+		& \text{Note that: } & Cov(X_i,X_j) &= Cov(X_j,X_i) \\
+		& \text{Therefore: } & Cov(\mathbf{X}) &=  Cov(\mathbf{X})^\top
+	\end{align*}
+	
+\end{bbbox}
+
+\subsection{Continuous random variables}
+\begin{itemize}
+\item A random variable $X$ is {continuous} if its sample space $X$ is uncountable. 
+\item In this case, $P(X=x)=0$ for each $x$.
+\item If $p_X(x)$ is a {probability density function} for $X$, then 
+\begin{align}
+P(a < X <b) &=\int_a^b p(x) dx\\
+P(a<X <a+dx) \approx p(a) \cdot dx
+\end{align}
+\item The {cumulative distribution function} is $F_X(x)=P(X<x)$. We have that $p_X(x)=F'(x)$, and $F(x)=\int_{-\infty}^x p(s) ds$.
+\item
+More generally: If $A$ is an event, then
+\begin{align}
+P(A)&=P(X \in A) =\int_{x \in A}  p(x) dx\\
+P(\Omega)&=P(X \in \Omega) =\int_{x \in \Omega} p(x) dx=1
+\end{align}
+\item Example: Uniform, Exponential, Beta  [on board]
+\end{itemize}
+
+\begin{bbbox}{PDFs of the uniform and the exponential distribution}
+	Continuous uniform distribution: \\
+	\begin{flalign*}
+		X &\sim U(0,1) \\
+		p(x) &= 
+			\begin{cases}
+		    	1 & \text{if } x \epsilon \left[0,1\right]; \\
+		    	0 & \text{else};
+			\end{cases} \\
+		P(a \leq X \leq b) &= \int_a^b p(x) dx \\
+						   &= \left[ x \right]_a^b = b-a\\
+		P(0 \leq X \leq 1) &= 1;
+	\end{flalign*} \\
+	Exponential Distribution with rate $\lambda$:
+	\begin{flalign*}
+		X &\sim Exp(\lambda) \\
+		p(x) &= \lambda \mbox{e}^{-\lambda x} \text{where } x \epsilon \left[0,\infty\right);\\
+		P(a \leq X \leq b) &= \int_a^b \lambda \mbox{e}^{-\lambda x} dx \\
+						   &= \left[ - \mbox{e}^{-\lambda x} \right]_a^b\\
+						   &= \mbox{e}^{-\lambda a} - \mbox{e}^{-\lambda b} \\
+		P(0 \leq X \leq \infty) &= \mbox{e}^{-\lambda 0} - \mbox{e}^{-\lambda \infty} = 1
+	\end{flalign*} \\
+\end{bbbox}
+
+
+\subsubsection{Expectations and variance}
+\begin{itemize}
+\item Mean: $E(X)= \int_x x  \cdot p(x) dx$\\
+\item Variance: $\mbox{Var}(X)= E(X^2)- E(X)^2$
+\item Example: Uniform, Exponential [on board]
+\item If $X$ has pdf $p(x)$, then $X | (X \in A)$ has pdf 
+\begin{align}
+p_{X|A}(x)=\frac{p(x)}{P(A)}=\frac{p(x)}{\int_{x \in A} p(x) dx}
+\end{align}
+\item Only makes sense if $P(A)>0$~!
+\item Example: Uniform, Exponential [on board]
+\end{itemize}
+
+\begin{bbbox}{Moments and Variance of the continuous uniform distribution}
+	Continuous uniform distribution: \\
+	\begin{align*}
+		X &\sim U(0,1) \\
+		E(X) &= \int_0^1 x p(x) dx = \int_0^1 x dx = &= \left[ \frac{1}{2}x^2 \right]_0^1 = \frac{1}{2}\\
+		E(X^2) &= \int_0^1 x^2 p(x) dx = \int_0^1 x^2 dx = &= \left[ \frac{1}{3}x^3 \right]_0^1 = \frac{1}{3}\\
+		Var(X) &= E(X^2) - E(X)^2 = \frac{1}{3} - \frac{1}{4} = \frac{1}{12}\\
+	\end{align*}
+%	Exponential distribution: \\
+%	\begin{align*}
+%		E(X) &= \int_0^\infty x \lambda \mbox{e}^{-\lambda x} dx \\
+%		     &= \left[ -\frac{1}{2}x^2 \mbox{e}^{-\lambda x} \right]_0^\infty \\
+%	\end{align*}
+\end{bbbox}
+
+\subsubsection{Marginalizationa, Conditioning and Independence}
+\begin{itemize}
+\item $p_{X,Y}(x,y)$, joint probablity density function of $X$ and $Y$
+\item $\int_x \int_y p(x,y)dx dy=1$
+\item {Marginal distribution:} $p(x)= \int_{-\infty}^\infty p(x,y) dy$
+\item {Conditional distribution:} $p(x|y)= \frac{p(x,y)}{p(y)}$ 
+\item Note: $P(Y=y)=0$! Formally, conditional probability in the continuous case can be derived using infinitesimal events.
+\item {Independence:} $X$ and $Y$ are independent if $p_{X,Y}(x,y)=p_X(x)p_Y(y)$
+\end{itemize}
+
+
+

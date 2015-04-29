@@ -1,0 +1,137 @@
+\section{Oriented PCA}
+
+\begin{align*}
+	\mb{u} = \mb{A x} 
+\end{align*}
+with $\mb{A}^{-1}$ exists and %and $\mb{A}$ is a whitening matrix.
+\begin{align*}
+	\mb{y} = \mb{w\TT x}
+\end{align*}
+is a dimensionality reducing tranformation.
+The  Rayleigh quotient in the $\mb{x}$-space is given by
+\begin{align}
+	R_{ab} = \frac{\mb{w}\TT \mb{C}_a \mb{w}}{\mb{w}\TT \mb{C}_b \mb{w}}
+\end{align}
+where $\mb{C}_a$ and $\mb{C}_b$ are the covariance matrices of two random variables. The Rayleigh
+quotient is maximized by the first principle component of 
+$\mb{C}_b^{-\frac{1}{2}} \mb{C}_b \mb{C}_b^{-\frac{1}{2}}$ (Rayleigh-Ritz theorem).
+\begin{align}
+	\mb{R}_{ab} = \frac{\mb{v}\TT \mb{A} \mb{C}_a \mb{A}\TT \mb{v}}{\mb{v}\TT \mb{A} \mb{C}_b \mb{A}\TT \mb{v}}
+	\stackrel{!}{=} \imat
+\end{align}
+
+We want this to be the identity matrix. $\mb{C}_b$ has to be positive definite.
+
+\begin{align}
+	\begin{split}
+	\mb{v}\TT \mb{C}_b \mb{v} 
+		&= \mb{v}\TT \mb{C}_b^{-\frac{1}{2}} \mb{C}_b \mb{C}_b^{-\frac{1}{2}} \mb{v} \\
+		&= \mb{v}\TT \, \mb{U} \mb{D}^{-\frac{1}{2}} \mb{U}\TT \, \mb{U} \mb{D} 
+		   \mb{U}\TT \, \mb{U} \mb{D}^{-\frac{1}{2}} \mb{U}\TT \, \mb{v} \\
+ 		&= \mb{v}\TT \mb{U} \, \mb{D}^{-\frac{1}{2}} \mb{D} \mb{D}^{-\frac{1}{2}} \, \mb{U}\TT \mb{v} \\
+ 		&= \mb{v}\TT \mb{U} \imat \mb{U}\TT \mb{v} \\
+ 		&= \mb{v}\TT \imat \mb{v} \\
+ 		&= \mb{v}\TT \mb{v}
+	\end{split} 		
+\end{align}
+
+\subsection{Whitening transform}
+\begin{align}
+	\mb{A} := \mb{Q} \mb{C}_b^{-\frac{1}{2}}
+\end{align}
+where $\mb{Q}$ is an arbitrary orthogonal matrix. For now we pick $\mb{Q} = \imat$
+
+\begin{align}
+	\Rightarrow \frac{\mb{v}\TT \mb{C}_b^{-\frac{1}{2}} \mb{C}_a \mb{C}_b^{-\frac{1}{2}} \mb{v}}{\mb{v}\TT \mb{v}}
+\end{align}
+
+\begin{align*}
+	\mb{x} \stackrel{\mb{A}}{\longrightarrow} \mb{u} \\
+	\mb{w} \stackrel{\text{?}}{\longleftarrow} \mb{v}
+\end{align*}
+
+\begin{align}
+	\frac{\mb{w}\TT \mb{C}_a \mb{w}}{\mb{w}\TT \mb{C}_b \mb{w}} \leftrightarrow 
+	\frac{\mb{v}\TT \mb{C}_b^{-\frac{1}{2}} \mb{C}_a \mb{C}_b^{-\frac{1}{2}} \mb{v}}{\mb{v}\TT \mb{v}}
+\end{align}
+
+\begin{align}
+	\mb{w} = \mb{A}^{-1} \mb{v}
+\end{align}
+
+\begin{align}
+	\mb{C}_b^{-\frac{1}{2}} \mb{C}_a \mb{C}_b^{-\frac{1}{2}} = \mb{V} \tilde{\mb{D}} \mb{V}\TT
+\end{align}
+
+if $\mb{D} = \mathrm{diag}(\mb{D}_{11}, \dots, \mb{D}_{MM})$ such that 
+$\mb{D}_{11} \geq \dots \geq \mb{D}_{MM}$
+then 
+\begin{align}
+	\mb{v} = \mb{V}(:,1) = \mb{v}_1 \qquad ; \qquad \mb{V} = (\mb{v}_1, \dots, \mb{v}_M)
+\end{align}
+
+\subsection{Signal to noise ratio}
+\begin{align}
+	\mb{x} = \left( \mb{A}\mb{s} + \mb{B}\mb{n} \right)
+\end{align}
+where $\mb{s}$ is the signal and $\mb{n}$ is noise.
+\begin{align}
+	{\mb{s} \choose \mb{n}} \sim \mathcal{N}(0,\imat)
+\end{align}
+using plain PCA implies the assumption that $\mathrm{Cov}[\mb{n}] = \imat$.
+It is assumed that $\mb{s}$ and $\mb{n}$ are statistically independent such that
+\begin{align}
+	\mathrm{Cov} \left[ \begin{matrix}
+		\mb{As} \\ \mb{Bn}
+	\end{matrix} \right]
+	= \left( \begin{array}{c c}
+		\mb{A A\TT} & 0 \\
+		0 & \mb{B B\TT}
+	  \end{array} \right)
+\end{align}
+and therefore the data convariance is given by
+\begin{align*}
+	\mathrm{Cov}[\mb{x}] = \mb{A A\TT} + \mb{B B\TT}
+\end{align*}
+
+Noise covariance:
+\begin{align*}
+	\mathrm{Cov}[\mb{x} | \mb{s}] = \mb{B B\TT}
+\end{align*}
+
+\subsubsection{How large is the mutual information between $\mb{x}$ and $\mb{s}$?}
+
+\begin{align}
+\begin{split}
+	\mathrm{I}[\mb{x}:\mb{s}] &= \mathrm{h}(\mb{x}) \mathrm{h}(\mb{x} | \mb{s}) \\
+					&= \frac{1}{2} \log \left(2 \pi \mathrm{e} \right)^M | \mb{A A\TT} + \mb{B B\TT} |
+					   -\frac{1}{2} \log \left(2 \pi \mathrm{e} \right)^M | \mb{B B\TT} | \\
+					&= \frac{1}{2} \log \frac{| \mb{A A\TT} + \mb{B B\TT} |}{| \mb{B B\TT} |} \\
+					&= \frac{1}{2} \log |\underbrace{(\mb{B B\TT})^{-\frac{1}{2}} \mb{A A\TT} (\mb{B B\TT})^{-\frac{1}{2}}}_{\text{Signal-to-noise ratio}} + \imat| \\					
+\end{split}
+\end{align}
+
+\begin{align}
+	\mb{y} = \mb{w\TT x} \qquad \text{and} \qquad \mb{W W}\TT = \imat
+\end{align}
+
+\begin{align}
+	\Rightarrow \mathrm{I}[\mb{y}:\mb{s}]
+	   = \frac{1}{2} \log |\mb{W} (\mb{B B\TT})^{-\frac{1}{2}} \mb{A A\TT} (\mb{B B\TT})^{-\frac{1}{2}} \mb{W}\TT + \mb{W W}\TT|
+\end{align}
+
+\emph{Oriented PCA} seeks to maximize the mutual information between the signal s and 
+the \emph{reduced representation} $\mb{y} = \mb{w\TT x}$. \\
+
+The optimum that will be found with oriented PCA is not unique because
+\begin{align}
+	\tilde{\mb{y}} = \mb{Q W x} \qquad \text{with} \qquad \mb{Q Q\TT} = \imat
+\end{align}
+has the same mutual information as 
+\begin{align*}
+	\mathrm{I}[\mb{y}:\mb{s}] = \mathrm{I}[\tilde{\mb{y}}:\mb{s}]
+\end{align*}
+If one seeks to identify a transform that diagonalizes two covariance matrices at the same time,
+the solution is unique -> Blind source separation \cite{Tong1991,Molgedey1994}\\
+
+Neuroscience application of oriented PCA: Slow feature analysis.

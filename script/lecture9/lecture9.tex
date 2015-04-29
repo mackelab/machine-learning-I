@@ -1,0 +1,196 @@
+\begin{center}
+{\LARGE\bf  
+Machine Learning WS2012/13 (Unsupervised Learning)}\\[.5cm]
+{\Large Lecturer: Prof. Dr. Bethge\\[1cm]
+
+\bf 2. Multivariate Distributions
+}
+\end{center}
+
+
+\begin{itemize}
+
+\item {\bf Joint distribution:} 
+$$
+p(x_i, y_j) = P(\{s \in S: X(s) = x_i\} \cap \{s \in S: Y(s) = y_j\})
+$$
+
+The following properties hold:
+\begin{itemize}
+\item[(i)] $\sum_i p(x_i, y_j) = p(y_j)$
+\item[(ii)]  $\sum_j p(x_i, y_j) = p(x_i)$
+\item[(iii)]  $\sum_i \sum_j p(x_i, y_j) = 1$\\
+\end{itemize}
+
+\item {\bf Joint cumulative distribution function:} 
+$$
+F(x) = P(\{s \in S: X(s) \le x\} \cap \{s \in S: Y(s) \le y\}), \quad \forall (x,y) \in (S_x \times S_y)
+$$
+The following properties hold:
+\begin{itemize}
+\item[(i)] $F(x_{k+1},y) - F(x_k,y) = p(x_{k+1},y)$,   \quad $F(x,y_{k+1}) - F(x,y_k) = p(x,y_{k+1})$
+\item[(ii)] $F$ is a nondecreasing function in $x$ and $y$.
+\item[(iii)] $\lim_{x\to -\infty} \lim_{y\to -\infty}  F(x,y)= 0$, \quad $\lim_{x\to \infty} \lim_{y\to \infty}  F(x,y)= 1$
+\item[(iv)] $ P(\{s \in S: X(s) > x\} \cap \{s \in S: Y(s) \le y\})) = F(\infty,y)-F(x,y)$, \\ $ P(\{s \in S: X(s) > x\} \cap \{s \in S: Y(s) > y\})) = 1-F(\infty,y)-F(x,\infty)+F(x,y)$
+\item[(v)] $ P(\{s \in S: x_1 < X(s) \le x_2\} \cap \{s \in S: y_1 < Y(s) \le y_2\}) = F(x_2,y_2) - F(x_2,y_1)-F(x_1,y_2) + F(x_1,y_1)$
+\end{itemize}
+
+\item {\bf Covariance:} 
+$$
+Cov[X,Y]= E[XY]-E[X]E[Y], 
+$$
+\item {\bf Covariance matrix:} for  $n$ random variables $X_1, \dots , X_n$ the {\it Covariance matrix} is defined by:
+$$
+ C_{ij} := Cov[X_i, X_j] = E[X_i X_j] - E[X_i] E[X_j]
+$$
+\item {\bf Independence:} 
+Two random variables $X,Y$ are {\it (statistically) independent} if their joint distribution is factorial: $p(x,y)= p(x) p(y)$ or, equivalently, if their joint cdf is factorial: $F(x,y)=F(x)F(y)$
+\item {\bf Proposition 1:} 
+\begin{itemize}
+\item[(i)] The expectation value is a linear form: $E[aX +bY+c]= a E[X]+bE[Y]+c$
+\item[(ii)] $Var[X] = Cov[X,X]$
+\item[(iii)] $Cov[X, Y] = E[(X - E[X])(Y-E[Y])]$ \,\, and hence \,\, $Var[X] = E[(X - E[X])^2]$
+\item[(iv)] The covariance is a bilinear form $Cov[aX+b, cY+d]=ac \, Cov[X, Y] $ \,\, and hence \,\, $Var[aX] = a^2\, Var[X]$
+\item[(v)] If  $X,Y$ independent, then $Cov[X,Y] = 0$
+\item[(vi)] The inversion is not warranted. Counter example: $p(x,y) = 1/8$ for all integers $x,y$ for which $|x| + |y| =2 $ and zero otherwise. Then\,\,  $Cov[X,Y] = 0$ \,\, but\,\, $p(x,y)\ne p(x) p(y)$.
+\item[(vii)] $Var[X+Y] =  Var[X] + Var[Y] + 2 Cov[X,Y]$ or more generally:\\[.2cm] $Var\left[\sum_{k=1}^n X_k \right] = \sum_{k=1}^n \sum_{j=1}^n Cov[X_k, X_j] = \sum_{k=1}^n Var[X_k] + \sum_{j\ne k} Cov[X_k, X_j] $
+\item[(viii)] $(Cov[X, Y])^2\le Var[X] \, Var[Y]$ \\(Hint: Let $\tilde X:=X-E[X]$, $\tilde Y:=Y-E[Y]$, and $Z:= (\tilde X-t\tilde Y)^2$. Then $E[Z]=t^2 E[\tilde Y^2]-2tE[\tilde X\tilde Y]+E[\tilde X^2] \ge 0 \forall t$ and hence $E[\tilde X\tilde Y]^2 \le E[\tilde X^2]E[\tilde Y^2]$ because $at^2 + bt+c \ge 0\,\, \forall t \,\, \Leftrightarrow \,\, b^2\le 4ac$.) 
+\item[(ix)] The covariance matrix is positive semi-definite: $C=AA^\top=UDU^\top$ mit $UU^\top=U^\top U=I$ (i.e. U is orthogonal) and $D_{ij}=Var[X_i] \, \delta_{ij} \ge 0$ (i.e. non-negative eigenvalues).
+\item[(x)] Decomposition of {\it total variance}: $Var[X] = E[Var[X|Y]] + Var[E[X|Y]]$
+\end{itemize} 
+\item {\bf IID Random variables:} $X_1, \dots, X_n$ are called ``{\it independent, identically distributed (i.i.d.)}'', iff $p(x_1, \dots, x_n)=\prod_{k=1}^n p_k(x_k)$  \,\, and \,\, $p_1(x)=p_2(x)=\dots = p_n(x)= p(x)$.
+\item {\bf Random Walk:} A sequence of random variables $\{S_n\}$ with $S_n=\sum_{k=1}^n X_k$ is called a ``{\it Random Walk}'', iff $X_1, \dots, X_n$ are 
+i.i.d. random variables. Computing the expectation or the variance of $\{S_n\}$ generates a sequence $\{\mu_n\}$ or $\{\sigma^2_n\}$, respectively, with
+$$
+\mu_n=:E[S_n]=nE[X_1]
+$$ 
+$$
+\sigma^2_n=:Var[S_n]=nVar[X_1]
+$$ 
+\item {\bf Binomial distribution:} A {\it binomial} random variable $k$ has the following distribution:
+$$
+p(k) = {n \choose k} \lambda^k (1-\lambda)^{n-k}, \quad 1\le k \le n 
+$$
+It describes the distribution of the $n$-th element of a random walk where $k=S_n$ is the sum over $n$ i.i.d. Bernoulli random variables $X \in \{0,1\}$. Thus, it holds:
+$$
+E[k] = n\, \lambda, \quad Var[k]= n \, \lambda (1-\lambda)
+$$
+\item {\bf Multinomial distribution:} A {\it multinomial} random variable is a multivariate random variable $\mathbf{k}$ and has the following distribution:
+$$
+p(\mathbf{k}) = \frac{n!}{k_1! \cdot \dots \cdot k_m!} \,\, \lambda_1^{k_1} \cdot \dots \cdot \lambda_m^{k_m}, \quad \sum_{j=1}^m k_j = n 
+$$
+It describes the distribution of the sum over $n$ i.i.d. categorical random variables $\mathbf{X} \in \{\mathbf{e}_1, \dots, \mathbf{e}_m\}$ with $\mathbf{e}_k$ being the standard basis vector whose $k$-th component is one and all other components are zero. It holds:
+$$
+E[k_j] = n\, \lambda_j, \quad Var[k_j]= n \, \lambda_j (1-\lambda_j), \quad Cov[k_i, k_j]= -n \, \lambda_i \,\lambda_j 
+$$
+\item {\bf Poisson distribution:} A {\it Poisson} random variable $k$ has the following distribution:
+$$
+p(k) = \frac{\mu^k}{k!} e^{-\mu}, \quad 0\le k \le n
+$$
+It is obtained as a limiting case for $n \to \infty$ subject to $E[k]=n\lambda=\mu$. It holds:
+$$
+E[k] = Var[k]= \mu
+$$
+\item {\bf Geometric Distribution:} A {\it geometric random variable} $k$ has a {\it ``discrete exponential''} distribution:
+$$
+p(k) = (1-\lambda)^{k-1} \lambda = (e^{\tilde \lambda}-1) \, e^{-\tilde \lambda \, k}, \quad  k \ge 1, \quad \mbox{with } \tilde \lambda = -\log(1-\lambda) \ge 0
+$$
+For example it is obtained, when asking for the probability that the waiting time to observe a $1$ only after $k$ Bernoulli experiments with parameter $\lambda$. It holds
+$$
+E[k] = \frac{1}{\lambda}, \quad Var[k]= \frac{1-\lambda}{\lambda^2}
+$$
+\item {\bf Boltzmann distribution:} For any function $E(\mathbf{x})$ the Boltzmann distribution is defined by
+$$
+p(\mathbf{x}) = \frac{1}{Z} \exp(-\beta E(\mathbf{x})) 
+$$
+where $E$ is called the {\it energy} and $Z=\sum \exp(-\beta E(\mathbf{x}))$ (in the discrete case) or  $Z=\int \exp(-\beta E(\mathbf{x})) d\mathbf{x}$ (in the continuous case) is called the {\it partition function}. The distribution is obtained by maximizing the entropy under the constraint of a fixed mean $E[\mathbf{x}] = E_0$.
+
+\item {\bf Normal distribution:} A multivariate normal distributed random variable can be derived as the maximum entropy distribution for given mean $\mu$ and covariance $C$. It has the following density:
+$$
+\rho(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^n |C|}} \exp\left( -\frac{1}{2} (\mathbf{x-\mu})^\top C^{-1} (\mathbf{x-\mu}) \right)
+$$
+where $C=E[\mathbf{xx}^\top]- E[\mathbf{x}] E[\mathbf{x}^\top]$ is the covariance matrix. 
+
+The {\it marginal distribution} $\rho(x_1, \dots, x_m)$ is given by
+$$
+\rho(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^n |C_m|}} \exp\left( -\frac{1}{2} (\mathbf{x-\mu_m})^\top C_m^{-1} (\mathbf{x-\mu_m}) \right)
+$$
+where $C_m = P_mCP_m^\top$ and $\mu_m = P_m \mu$ with $P_m=[e_1, \dots, e_m]$.
+
+The {\it conditional distribution} $\rho(x_1, \dots, x_m| x_{m+1}, \dots, x_n)$ is given by
+$$
+\rho(x_1, \dots, x_m| x_{m+1}, \dots, x_n) = \frac{1}{\sqrt{(2\pi)^n |\tilde C|}} \exp\left( -\frac{1}{2} (\mathbf{x-\tilde \mu})^\top \tilde C^{-1}(\mathbf{x-\tilde \mu}) \right)
+$$
+where
+$$
+\tilde \mu = \mu({x_{m+1}, \dots, x_n})= C_{x_1, \dots, x_m| x_{m+1}, \dots, x_n} C_{x_{m+1}, \dots, x_n}^{-1} (x_1, \dots, x_m)^\top
+$$
+$$
+\tilde C = C_m - C_{x_1, \dots, x_m| x_{m+1}, \dots, x_n} C_{x_{m+1}, \dots, x_n}^{-1} C_{x_1, \dots, x_m| x_{m+1}, \dots, x_n}^\top
+$$
+
+\item {\bf Elliptically contoured distribution:} An important generalization of the multivariate normal distribution is the class of elliptically contoured distributions for which the density takes the following simple form:
+$$
+\rho(\mathbf{x}) = f(||W\mathbf{x}||) .
+$$
+
+\end{itemize}
+
+
+\vfil 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{wrapfigure}{r}{.28\textwidth} 
+% \hspace{-.3cm}
+% \fbox{
+%% \includegraphics[height=0.45\textwidth]{./popRF4.pdf}
+%% \includegraphics[height=0.45\textwidth]{./impulse_response4.pdf}
+%}
+%\vspace{-1cm}
+%\end{wrapfigure}
+%
+%
+%\item {\bf Elementar-Partition:} Sei $\mathcal{E}_0 \subset \mathcal{B}(S)$ definiert durch  $\mathcal{E}_0 := \{ \{s_k\} : s_k\in S\}$. Dann gilt:
+%\begin{itemize}
+%\item[(E1)] $\mathcal{E}_0$ ist eine Partition von $S$.
+%\item[(E2)] $\mathcal{E}_0$ ist keine Boolsche Algebra. 
+%\item[(E3)] Falls $m$ ein Ma\ss \ ist auf $\mathcal{B}(S)$ dann ist das Ma\ss \ eindeutig festgelegt, durch die Werte des Ma\ss es $m_k$  f\"ur die Elementar-Ereignisse $\{s_k\} \in \mathcal{E}_0$, also durch die Spezifikation: $m(\{s_k\})= m_k$.
+%\item[(E4)] Insbesondere gilt f\"ur ein beliebiges Ereignis $A \in \mathcal{B}(S)$:
+%$$
+%m(A)=\sum_{ \{s_k\} \in \mathcal{E}_0} m(A \cap \{s_k\}) = \sum_{\{k\,:\, \{s_k\} \in (A \cap \mathcal{E}_0)\}} m_k
+%$$
+%\end{itemize}
+%
+%\item {\bf Zufallsvariable:} Eine Zufallsvariable $X$ ist eine (me\ss bare) Funktion von einem Wahrscheinlichkeitsraum $(S, \mathcal{B}(S), P)$ in einen Me\ss raum $(S^\prime,  \mathcal{B}(S^\prime))$. Die durch $X$ vorgegebene Abbildung induziert ein eindeutiges Wahrscheinlichkeitsma\ss \ auf $S^\prime$, welches durch die {\bf Wahrscheinlichkeitsverteilung} festgelegt ist. F\"ur {\it diskrete} Zufallsvariablen ist die Wahrscheinlichkeitsverteilung gegeben durch:
+%$$
+%p(x_j):= P(\{s \in S: X(s) = x_j\}), \quad \forall x_j \in S^\prime
+%$$
+%{\it Anmerkungen: }
+%\begin{itemize}
+%\item[(i)] F\"ur uns wird $S^\prime$ immer die Menge der reellen Zahlen sein. 
+%\item[(ii)] F\"ur diskrete Zufallsvariablen k\"onnen wir immer die Potenzmenge als Ereignisraum w\"ahlen, d.h. $\mathcal{B}(S) = \{A : A\subseteq S\}$. In dem Fall ist jede Funktion von  $(S, \mathcal{B}(S), P)$ nach $(S^\prime,  \mathcal{B}(S^\prime))$ me\ss bar und somit eine Zufallsvariable.
+%\end{itemize}
+%
+%Beispiele:
+%\begin{itemize}
+%\item[(i)] Sei $S=\{$``Kopf'', ``Zahl''$\}$ und $X($``Kopf''$)=1$ und $X($``Zahl''$)=0$. Dann ist $X$ eine (bin\"are) Zufallsvariable.
+%\item[(ii)] Sei $S=\{1,2,3,4,5,6\}$ und $X(s)=1$ falls $s\in S$ ungerade und $X(s)=0$ falls $s\in S$ gerade. Dann ist $X$ eine (bin\"are) Zufallsvariable.
+%\item[(iii)] Die Abbildung $f: \mathcal{B}(S) \to R$ mit $f(\{1,3,5\})=1$ und $f(\{2,4,6\})=0$ ist keine Zufallsvariable.
+%\end{itemize}
+%
+%\item {\bf Praktischer Umgang mit diskreten Zufallsvariablen:} Man \"uberlegt sich, die Menge aller Elementar-Ereignisse, definiert eine Numerierung und eine Wahrscheinlichkeitsverteilung. Die Wahrscheinlichkeitsverteilung wird oft mit Hilfe eines {\bf Histograms} visualisiert, wo man die Werte der Wahrscheinlichkeitsverteilung als Funktion der Nummerierung auftr\"agt.\\[.2cm]
+%{\it Beispiel:} Bei einer {\bf gleichverteilten Zufallsvariable} haben alle $n$ Elementarereignisse die gleiche Wahrscheinlichkeit: $p(1) = p(2) = \dots p(n) = 1/n$. Die Gleichverteilung spielt eine gro\ss e Rolle, da man h\"aufig aus Symmetrie-Annahmen heraus, sinnvoll ist allen Elementarereignissen die gleiche Wahrscheinlichkeit zu geben. In der statistischen Physik ist dies f\"ur das ``Mikrokanonische Ensemble'' der Fall, wo alle zul\"assigen Zust\"ande (diejenigen, die die vorgegebene Gesamtenergie haben) als gleichwahrscheinlich angenommen werden, da es keine weiteren Eigenschaften (wie zB Energie-Fluktuationen, Teilchenzahl-Fluktuationen, etc) gibt, die eine Symmetriebrechung nahelegen.
+%
+%\item {\bf Negative Binomialverteilung:} Eine {\it negativ-binomialverteilte} Zufallsvariable $k$ hat folgende WKT-Verteilung:
+%$$
+%p(n) = {n-1 \choose k-1} \lambda^k (1-\lambda)^{n-k}, \quad 1\le k \le n 
+%$$
+%Sie ist eine Verallgemeinerung der Wartezeit-Verteilung, wenn man nach der Anzahl der Experimente fragt, die man braucht um $k$ Einsen zu beobachten. Es gilt:
+%$$
+%E[k] = \frac{k}{\lambda}, \quad 
+%$$
+%\item {\bf Hypergeometrische Verteilung:} Eine {\it hypergeometrische} Zufallsvariable $k$ hat folgende WKT-Verteilung:
+%$$
+%p(k) = \frac{{s \choose k} {n-s \choose r-k}}{ {n \choose r}}  = \frac{{r \choose k} {n-r \choose s-k}}{ {n \choose s}} , \quad \max(0, r+s-n) \le k \le \min(r,s)
+%$$

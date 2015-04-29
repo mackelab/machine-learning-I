@@ -1,0 +1,262 @@
+\section{Principle component analysis}
+
+In principle component analysis (PCA) we assume a linear generative model of the form
+shown in equation \eqref{eq:LGM} with $D = M$, i.e. a complete LGM, and independent sources
+of unequal variance such that $\sigma_1^2 > \sigma_2^2 > \dots > \sigma_M^2$. 
+If we further assume that the matrix $\mb{A}$ is orthogonal such that 
+$\mb{A} \mb{A}\TT = \imat_M$ we can show that the Eigendecomposition of the data
+covariance matrix $\mb{C}_x$ finds the linear transformation matrix $\mb{A}$.
+We noticed earlier that the data covariance matrix for an LGM of the given form 
+can be decomposed such that:
+\begin{align}
+	\mb{C}_x = \mb{A} \mb{C}_s \mb{A}\TT
+	\label{eq:Cx_dec}
+\end{align}
+We can compare this result to the Eigendecomposition of a matrix:
+\begin{align}
+	\mb{B} = \mb{U} \mb{D} \mb{U}^{-1}
+\end{align}
+where $\mb{B}$ is an invertible $M \times M$ matrix, $\mb{U}$ is the matrix of Eigenvectors
+and $\mb{D}$ is the diagonal matrix of Eigenvalues.
+We further notice that for a real-valued symmetric matrix $\mb{B}$ the Eigendecomposition
+is given by
+\begin{align}
+	\mb{B} = \mb{U} \mb{D} \mb{U}\TT
+\end{align}
+and has the same functional form as equation \eqref{eq:Cx_dec}. Since a covariance matrix
+is always symmetric and can therefore be diagonalized we notice that $\mb{C}_s = \mb{D}$
+with $\sigma_1^2 > \sigma_2^2 > \dots > \sigma_M^2$ is a
+diagonal covariance matrix for the independent sources and that $\mb{A} = \mb{U}$ and 
+is the matrix of Eigenvectors of $\mb{C}_x$ where $\mb{U} = \{\mb{u}_1, \mb{u}_2, \dots, \mb{u}_M\}$.
+
+\paragraph{Whitening} If we now want to recover the independent sources we we can apply a decorrelating
+transform based on the Eigenvector matrix of the data covariance matrix $\mb{C}_x$. We noticed that
+$\mb{U} = \mb{A}$ and therefore we can find a backtransform such that
+\begin{align}
+	\mb{x} &= \mb{U s} \\
+	\mb{U \TT x} &= \underbrace{\mb{U\TT U}}_{ = \imat_M} \mb{s} \\
+    \mb{s} &= \mb{U\TT x}
+\end{align}
+where we have removed correlations between vector dimensions. If we want to reduce the dimensionality
+of our data we simply use the first $K$ Eigenvectors of $\mb{U}$ which are called the $K$ principle
+components of $X$. It is important to note here that bacause $\sigma_1^2 > \sigma_2^2 > \dots > \sigma_M^2$
+projecting the data on the $K$ principle components leads to a projection to the $K$-dimensional subspace 
+of highest variance. If we want to remove the difference in variance such that 
+$\sigma_1^2 = \sigma_2^2 = \dots = \sigma_M^2$, we can introduce isovariance by applying the transform
+\begin{align}
+	\mb{\tilde{s}} = \mb{D}^{-\frac{1}{2}} \mb{s}
+\end{align}
+This approach is called whitening. After the whitening we can be sure that a linear transform will
+not introduce correlations between dimensions (see \ref{par:cov_isovar}).
+
+\paragraph{How to use PCA on data}
+Given $\mb{X} = (\mb{x_1}, \dots, \mb{x_N})$ with $\mb{x_n}$ being a column vector of length $M$. 
+Each column vector represents an observation. We can calculate the empirical mean by 
+\begin{align}
+	\hat{\greekvec{\mu}} = \frac{1}{N} \mb{X \ivec_M}
+\end{align}
+From now on we will assume that data matrices have zero mean, i.e. 
+\begin{align*}
+	\mb{X} = \mb{X} - \greekvec{\mu}\ivec_M\TT
+\end{align*}
+and that $N > M$. The empirical covariance matrix is then given by:
+\begin{align}
+	\begin{split}
+	\hat{\mb{C}} &= \frac{1}{N} \mb{X X \TT} \\
+	             &= \frac{1}{N} \sum_{n = 1}^N \mb{x_n x_n}
+	\end{split}
+\end{align}
+
+\subsection{Singular value decomposition}
+In some cases it can be easier to find the singular value decomposition (SVD) of a data matrix
+rather than finding the Eigendecomposition of the empirical covariance matrix. In this section
+we will shortly introduce SVD and show it's relationship to PCA.\\
+SVD is a generalization of the Eigendecomposition which can decompose any matrix into different 
+factors such that for a $M \times N$ real matrix $\mb{X}$ we find
+\begin{align}
+	\mb{X} = \mb{U S V\TT}
+\end{align}
+where $\mb{U}$ is a $M \times M$ orthogonal matrix, $\mb{S}$ is a $M \times N$  diagonal matrix
+where the values on the diagonal called the singular values, and $\mb{V}$ is a $N \times N$ 
+orthogonal matrix. The SVD of a diagonizable matrix is equivalent to the Eigendecomposition 
+of that matrix. A unique solution for SVD exists if all values on the sigular values are different. \\
+
+\noindent To show the relationship between SVD and PCA we will decompose the empirical covariance matrix
+into the data matrix as above and then apply SVD to further decompose the data matrices:
+\begin{align}
+	\begin{split}
+	N \hat{\mb{C}} &= \mb{X X \TT} \\
+	               &= \mb{U S V\TT} \left( \mb{U S V\TT} \right)\TT \\
+   	               &= \mb{U S} \underbrace{\mb{V\TT V}}_{= \imat_N} \mb{S\TT U\TT}\\
+   	               &= \mb{U S S\TT U\TT}\\
+	\end{split}
+\end{align}
+\noindent We notice that $\mb{S S\TT} = \mb{D}$ is the matrix of Eigenvalues for $\mb{X X\TT}$ and
+$\mb{U}$ is the matrix of Eigenvectors. That is the singular values of the data matrix represent 
+the standard deviation in the priniciple directions, whereas the Eigenvalues of $\mb{X X\TT}$ 
+represent the variance in the principle directions.
+
+\subsubsection{SVD of the Gram matrix}
+In kernel methods we often deal with a gram matrix $\mb{G}$ of the form:
+\begin{align}
+	\mb{G} = \frac{1}{N} \mb{X\TT X}
+\end{align}
+which is represented by the scalar product between any pair of observations. If we perform
+SVD on the gram matrix we find that:
+\begin{align}
+	\begin{split}
+	N \mb{G} &= \left( \mb{U S V\TT} \right) \TT \mb{U S V\TT} \\
+			 &= \mb{V S\TT} \underbrace{\mb{U\TT U}}_{= \imat_K} \mb{S V\TT}	 \\
+			 &= \mb{V S\TT S V\TT}
+	\end{split}			
+\end{align}
+This decomposition is referred to as Kernel PCA. For more information on the topic see 
+\cite[Chapter 6 \& 12.3]{Bishop2006}
+
+\subsection{Model comparison}
+If we want to perform model comparison we can estimate the posterior probability of our 
+model given the data based on Bayes theorem:
+\begin{align}
+	P(M|X) = \frac{1}{Z} P(X|M)P(M)
+\end{align}
+Dependent on our preferences towards a class of models we can specify the prior probability of
+a model by $P(M)$. If we do not want to make assumptions about $P(M)$ or just for convenience
+we sometimes assume $P(M) = const.$ which is equivalent to a Likelihood-based model comparison.
+
+Given we have observed i.i.d. data represented in a $M \times N$ matrix:
+\begin{align}
+	\mb{X} = \left( \underbrace{\mb{x_1}, \dots, \mb{x_N}}_{\text{i.i.d samples}} \right)
+\end{align}
+and we assume $P(M) = const.$, then $P(M|X)$ is proportional to the likelihood of the 
+data given a model such that:
+\begin{align}
+	\begin{split}
+	P(M|X) \varpropto \prod_{n=1}^N \rho(\mb{x_n}|M) 
+	    &= \exp \left( \sum_{n=1}^N \underbrace{\log \left( \rho(\mb{x_n}|M) \right)}_{\text{Log-likelihood}} \right)
+	\end{split}
+\end{align}
+\noindent For the Gaussian with $\rho(\mb{x_n}|M) = \mathcal{N}(\mb{x_n}|0,\mb{C})$ the likelihood becomes:
+\begin{align}
+	\begin{split}
+	\prod_{n=1}^N \rho(\mb{x_n}|M) 
+	        &= \exp \left( \sum_{n=1}^N \log \left( \normpdfd \right) \right) \\
+	        &= \exp \left( \sum_{n=1}^N -\frac{1}{2}\log \left( 2\pi^M |\mb{C}| \right) -\frac{1}{2} \mb{x_n \TT C^{-1} x_n} \right) \\
+	        &= \exp \left( -\frac{N}{2}\log \left( 2\pi^M |\mb{C}| \right) -\frac{1}{2} \sum_{n=1}^N \mb{x_n \TT C^{-1} x_n} \right) \\
+	\end{split}
+\end{align}
+
+\subsubsection{The rescaling problem}
+We will now consider the rescaling problem. If we rescale a random variable using a linear transform
+the probability density of the respective linear mapping is also rescaled. As a result the likelihood
+function of the two random variable has a different scale.
+\begin{example}[The rescaling problem] \label{ex:rescaling}
+Consider a one-dimensional linear mapping of the form
+\begin{align}
+	y &= \lambda x
+\end{align}
+with 
+\begin{align*}
+	x \sim \mathcal{N}(0,\sigma^2) \qquad \text{ and } \qquad
+	y \sim \mathcal{N}(0,\lambda^2 \sigma^2)
+\end{align*}
+then
+\begin{align}
+	\begin{split}
+	\rho_y(y) &= \frac{1}{\sqrt{2\pi \lambda^2 \sigma^2}} \exp \left( \frac{y^2}{2 \lambda^2 \sigma^2} \right)\\
+	         &= \frac{1}{\lambda} \frac{1}{\sqrt{2\pi \sigma^2}} \exp \left( \frac{\lambda^2 x^2}{2 \lambda^2 \sigma^2} \right)\\
+	         &= \frac{1}{\lambda} \rho_x(x)
+	\end{split}	         
+\end{align}
+is the relationship between the two probability densities.
+\end{example}
+\noindent The likelihood depends on the scale of a random variable. Thus all models should be evaluated with
+respect to the same scale for model comparison with the likelihood measure. Or differently, the likelihood is
+a relative measure, not an absolute one.
+
+\begin{proposition}[Change of variables]
+Given an invertible nonlinear mapping of the form:
+\begin{align*}
+	\mb{x} &  \stackrel{f}{\longrightarrow} \mb{y} \\
+	\mb{x} &  \stackrel{g = f^{-1}}{\longleftarrow} \mb{y}
+\end{align*}
+If the probability density function $\rho_{\mb{x}}(\mb{x})$ of a random variable 
+$X$ is known we can calculate the
+probability density $\rho_{\mb{y}}(\mb{y})$. This is called a change of variables.
+We know that the probability under the differential area is unchanged under the 
+change of variables:
+\begin{align}
+	\rho_{\mb{y}}(\mb{y}) \mathrm{d}\mb{y} = \rho_{\mb{x}}(\mb{x}) \mathrm{d}\mb{x}
+\end{align}
+and hence the probability density $\rho_{\mb{y}}(\mb{y})$ can be calculated by
+\begin{align}
+	\begin{split}
+	\rho_{\mb{y}}(\mb{y}) 
+	&= \rho_{\mb{x}}(\mb{x})  \begin{vmatrix}\frac{\mathrm{d}\mb{x}}{\mathrm{d}\mb{y}}\end{vmatrix} \\
+	&= \rho_{\mb{x}}(g(\mb{y})) \begin{vmatrix}\frac{\mathrm{d}g}{\mathrm{d}\mb{y}}\end{vmatrix} \\
+	&= \frac{\rho_{\mb{x}}(f^{-1}(\mb{y}))}{\begin{vmatrix}\frac{\mathrm{d}f}{\mathrm{d}\mb{x}} f^{-1}(\mb{y})\end{vmatrix}}	
+	\end{split}
+\end{align}
+where
+\begin{align}
+	\begin{vmatrix}\frac{\mathrm{d}\mb{y}}{\mathrm{d}\mb{x}}\end{vmatrix}
+	    = |J|
+	    = \begin{vmatrix}
+	    	\frac{\mathrm{d}y_1}{\mathrm{d}x_1} & \cdots & \frac{\mathrm{d}y_M}{\mathrm{d}x_1} \\
+	    	\vdots & \ddots & \vdots \\
+	    	\frac{\mathrm{d}y_1}{\mathrm{d}x_M} & \cdots & \frac{\mathrm{d}y_M}{\mathrm{d}x_M} \\
+	    \end{vmatrix}
+\end{align}
+is the Jacobian determinant. For more information see \cite[p.18, p.247]{Bishop2006}. In example
+\ref{ex:rescaling} from above the transform can be simply read out as:
+\begin{align}
+	\rho_{\mb{y}}(\mb{y}) = \frac{1}{\lambda} 	\rho_{\mb{x}} \left( \frac{\mb{y}}{\lambda} \right)
+\end{align}
+\end{proposition}
+
+\subsubsection{Generally for LGMs}
+We will now come back to our linear generative model of the form
+\begin{align*}
+	f: \qquad \mb{x} = \mb{A s} = \mb{U s}
+\end{align*}
+where $\mb{U}$ is the Eigenvector basis of the covariance matrix $\mb{C}_x$.
+If we now want to find the change of variables from $\rho_\mb{x}(\mb{x})$ to $\rho_\mb{s}(\mb{s})$:
+\begin{align}
+	\rho_{\mb{S}}(\mb{s}) 
+	&= \rho_{\mb{x}}(\mb{x})  \begin{vmatrix}\frac{\mathrm{d}\mb{x}}{\mathrm{d}\mb{s}}\end{vmatrix} \nonumber \\
+	&= \rho_{\mb{x}}(\mb{x})  \begin{vmatrix}\frac{\mathrm{d}f(\mb{s})}{\mathrm{d}\mb{s}}\end{vmatrix}
+\end{align}
+we notice that
+\begin{align}
+	\begin{vmatrix}\frac{\mathrm{d}f(\mb{s})}{\mathrm{d}\mb{s}}\end{vmatrix} = |\det(\mb{U})|
+\end{align}
+since
+\begin{equation*}
+	%\left. \begin{aligned}
+		f(\mb{s}) = \mb{U s}  \qquad \text{and} \qquad
+		\mb{s} = \mb{U\TT x}                                   
+		%\mb{s} &= g(\mb{x}) = \mb{U\TT x} \\
+		%f(\mb{s}) &= g^{-1}(\mb{x}) = \mb{U s} \\
+	%\end{aligned} \qquad \right\}
+    %\qquad \begin{vmatrix}\frac{\mathrm{d}f}{\mathrm{d}\mb{s}}\end{vmatrix} = |\det(\mb{U})|
+\end{equation*}
+We further find that
+\begin{align*}
+	|\det(\mb{U})| = \sqrt{\det(\mb{U})^2} %\\
+	               = \sqrt{\det(\mb{U}) \det(\mb{U}\TT)} %\\
+	               = \sqrt{\det(\mb{U U\TT})} %\\
+	               = \sqrt{\det(\imat_M)} %\\
+	               = 1
+\end{align*}
+As a result the change of variables reduces to the form
+\begin{align}
+	\rho_{\mb{s}}(\mb{s}) = \rho_{\mb{x}}(\mb{U s})
+\end{align}
+and vice versa
+\begin{align}
+	\rho_{\mb{x}}(\mb{x}) = \rho_{\mb{s}}(\underbrace{\mb{U\TT x}}_{\mb{s}})
+	                      = \prod_{m=1}^M \rho(s_m)
+\end{align}
+\begin{proposition}[Necessary condition]
+For all $\mb{U}$ with the same Jacobian determinant the likelihood must be largest
+for the true generating model.
+\end{proposition}

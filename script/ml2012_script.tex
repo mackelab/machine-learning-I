@@ -1,0 +1,97 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=10pt,font=footnotesize,labelfont=bf]{caption}
+\usepackage{epsf}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphics, graphicx}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{latexsym}
+\usepackage{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage[round,comma,authoryear]{natbib}
+\usepackage{tabularx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{makeidx}
+\usepackage{blindtext}
+\usepackage{adjustbox}
+\usepackage{varwidth}
+\usepackage{color}
+\usepackage{titlesec}
+\usepackage{amsthm} % Theorem environment
+\usepackage{mathabx}
+\definecolor{CornFlowerBlue}{rgb}{0.392157,0.584314,0.929412}
+\definecolor{LightGray}{gray}{0.8}
+
+\newcommand{\sectionbreak}{\clearpage}
+\newenvironment{defbox}[1]{%
+	\vspace{0.3cm}
+    \noindent
+    \adjustbox{innerenv={varwidth}[c]{0.9\linewidth},margin=\fboxsep+.4cm \fboxsep+.35cm,bgcolor=LightGray,frame,center}\bgroup
+    	\textbf{Definition: #1} \normalfont \newline
+}{\egroup \vspace{0.3cm}}
+
+\newenvironment{bbbox}[1]{%
+	\vspace{0.3cm}
+    \noindent
+    \adjustbox{innerenv={varwidth}[c]{0.9\linewidth},margin=\fboxsep+.4cm \fboxsep+.35cm,bgcolor=LightGray,frame,center}\bgroup
+    	\textbf{Blackboard: #1} \normalfont \newline \flushleft
+}{\egroup \vspace{0.3cm}}
+
+\newenvironment{exbox}[1]{%
+	\vspace{0.3cm}    
+    \noindent
+    \adjustbox{innerenv={varwidth}[c]{0.9\linewidth},margin=\fboxsep+.4cm \fboxsep+.35cm,bgcolor=CornFlowerBlue,frame,center}\bgroup
+    	\textbf{Example: #1} \normalfont \newline
+}{\egroup \vspace{0.3cm}}
+
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}%
+  {\bfseries}{}%
+  {\newline}{}%
+\theoremstyle{break}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{example}{Example}[section]
+
+\input{./commands}
+
+\title{Lecture Notes in Machine Learning I}
+\author{Patrick Putzky}
+\date{Winter term 2012/2013}
+\makeindex
+
+\begin{document}
+    \input{./titlepage/titlepage}
+    \tableofcontents
+    \newpage
+    
+    \input{./lecture1/lecture1}
+    
+    \part{Supervised Learning}
+    \input{./lecture3/lecture3}
+    \input{./lecture2/lecture2}
+    \input{./lecture4/lecture4}
+    \input{./lecture5/lecture5}
+    \input{./lecture6/lecture6}
+	\input{./lecture7/lecture7}	
+
+\pagebreak
+	
+    \part{Unsupervised Learning}    
+   	\input{./lecture8/lecture8}
+   	\input{./lecture9/lecture9}
+   	\input{./lecture10/lecture10}
+   	\input{./lecture11/lecture11}
+  	\input{./lecture12/lecture12}
+  	\input{./lecture13/lecture13}  	
+
+    \newpage
+    \bibliographystyle{plainnat}
+    \bibliography{./references/references}
+\end{document}
